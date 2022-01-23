@@ -1,9 +1,9 @@
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class ClassifierAlpha {
     private int number;
-    private SetAdder setAdder = (s, n) -> s.add(n);
 
     public ClassifierAlpha(int number) {
         this.number = number;
@@ -15,17 +15,22 @@ public class ClassifierAlpha {
 
     public Set factors() {
         HashSet factors = new HashSet<>();
-        for (int pod = 1; pod <= Math.sqrt(number); pod++) {
+        for (int pod=1; pod <= Math.sqrt(number); pod++) {
             if (isFactor(pod)) {
-                setAdder.add(factors, pod);
-                setAdder.add(factors, number / pod);
+                factors.add(pod);
+                factors.add(number / pod);
             }
         }
         return factors;
     }
 
     static public int sum(Set factors) {
-        return factors.stream().mapToInt(i -> (int) i).sum();
+        Iterator iterator = factors.iterator();
+        int sum = 0;
+        while (iterator.hasNext()) {
+            sum += (Integer) iterator.next();
+        }
+        return sum;
     }
 
     public boolean isPerfect() {
@@ -39,7 +44,6 @@ public class ClassifierAlpha {
     public boolean isDeficient() {
         return sum(factors()) - number < number;
     }
-
     public static void main(String[] args) {
         ClassifierAlpha alpha1 = new ClassifierAlpha(10);
         ClassifierAlpha alpha2 = new ClassifierAlpha(6);

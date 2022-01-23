@@ -1,19 +1,16 @@
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class PrimeAlpha {
     private int number;
-    private SetAdder setAdder = (s, n) -> s.add(n);
 
     public PrimeAlpha(int number) {
         this.number = number;
     }
 
     public boolean isPrime() {
-        Set primeSet = new HashSet();
-        setAdder.add(primeSet, 1);
-        setAdder.add(primeSet, number);
-
+        Set primeSet = new HashSet(){ {add(1); add(number);} };
         return number > 1 && factors().equals(primeSet);
     }
 
@@ -23,10 +20,10 @@ public class PrimeAlpha {
 
     public Set factors() {
         HashSet factors = new HashSet<>();
-        for (int pod = 1; pod <= Math.sqrt(number); pod++) {
+        for (int pod=1; pod <= Math.sqrt(number); pod++) {
             if (isFactor(pod)) {
-                setAdder.add(factors, pod);
-                setAdder.add(factors, number / pod);
+                factors.add(pod);
+                factors.add(number / pod);
             }
         }
         return factors;
