@@ -20,10 +20,10 @@ public class Main {
     }
 
     // ClassfierAlpha
-    public static Factor isFactor = (number, potentialFactor) -> number % potentialFactor == 0; // 인수
+    public static Factor factor = (number, potentialFactor) -> number % potentialFactor == 0; // 인수
     public static NumbersFactor numbersFactor = (number) -> IntStream.rangeClosed(1, (int) Math.sqrt(number))
             .boxed()
-            .filter(potentialNumber -> isFactor.is(number, potentialNumber))
+            .filter(potentialNumber -> factor.is(number, potentialNumber))
             .map(pod -> new Integer[] {pod, number / pod})
             .flatMap(Arrays::stream)
             .collect(Collectors.toSet());
